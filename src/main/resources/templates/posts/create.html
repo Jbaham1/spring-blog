@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<th:block th:if="${post.id == null}">
+    <head th:replace="fragments/header :: main-head('create post')"></head>
+</th:block>
+
+
+<th:block th:unless="${post.id == null}">
+    <head th:replace="fragments/header :: main-head('edit post')"></head>
+</th:block>
 <body>
-<h1>Create</h1>
-<form action="/posts/create" method="POST">
-    <label for="title">Title</label>
-    <input type="text" id="title" name="title"><br>
-    <label for="body">Body</label>
-    <input type="text" id="body" name="body"><br>
-    <input type="submit" value="Create a post">
-</form>
+<nav th:replace="fragments/navbar :: mainNav"></nav>
+
+<th:block th:if="${post.id == null}">
+
+    <form action="/posts/create" method="POST">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title"><br>
+        <label for="body">Body</label>
+        <input type="text" id="body" name="body"><br>
+        <input type="submit" value="Create a post">
+    </form>
+</th:block>
 </body>
 </html>

@@ -57,10 +57,7 @@ public class PostController {
     @PostMapping("/posts/{id}/edit")
     public String editPost(@ModelAttribute Post postToUpdate, @ModelAttribute User userToAdd, @PathVariable Long id) {
 
-        System.out.println();
-
         postToUpdate.setId(id);
-
 
         postToUpdate.setOwner(userToAdd);
 

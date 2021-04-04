@@ -13,7 +13,7 @@ import java.util.List;
 
 @Controller
 public class PostController {
-    List<Post> posts = new ArrayList<>();
+//    List<Post> posts = new ArrayList<>();
 
     @GetMapping("/posts")
     public String allPosts() {

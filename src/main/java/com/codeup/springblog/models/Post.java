@@ -15,4 +15,5 @@ public class Post {
     @Column(nullable = false, length = 500)
     private String body;
 
+
 }

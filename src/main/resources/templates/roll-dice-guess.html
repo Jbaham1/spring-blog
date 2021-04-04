@@ -4,22 +4,20 @@
 <body>
 <nav th:replace="fragments/navbar :: mainNav"></nav>
 <div class="container">
-<h1>
-    To roll the Dice, select a number and we'll let you know if you guessed right.
-</h1>
-    <hr>
-    <h4>
-        Ready?
-    </h4>
-    <h6>Select a number on the dice</h6>
+    <p> You guessed <span th:text="${guess}"></span></p>
+    <p> The correct answer is <span th:text="${randomNum}"></span></p>
+
+    <p th:if="${isCorrect}"> You guessed right! Try again?</p>
+    <p th:if="${!isCorrect}"> You guessed wrong. Try again!</p>
+
+
+
+
     <a href="/roll-dice/1">1</a>
     <a href="/roll-dice/2">2</a>
     <a href="/roll-dice/3">3</a>
     <a href="/roll-dice/4">4</a>
     <a href="/roll-dice/5">5</a>
     <a href="/roll-dice/6">6</a>
-
-
-</div>
 </body>
 </html>

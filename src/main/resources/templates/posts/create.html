@@ -10,16 +10,56 @@
 </th:block>
 <body>
 <nav th:replace="fragments/navbar :: mainNav"></nav>
-
 <th:block th:if="${post.id == null}">
 
-    <form action="/posts/create" method="POST">
+    <form th:action="@{/posts/create}" method="post" th:object="${post}">
+
+        <h2>Create Post Form</h2>
+
+        <br>
+
         <label for="title">Title</label>
-        <input type="text" id="title" name="title"><br>
-        <label for="body">Body</label>
-        <input type="text" id="body" name="body"><br>
-        <input type="submit" value="Create a post">
+        <input th:field="*{title}"  id="title" type="text">
+
+        <br>
+
+        <label for="body">body</label>
+        <input th:field="*{body}" id="body" type="text">
+
+        <br>
+
+        <input type="submit" value="create post">
+
     </form>
+
 </th:block>
+
+<th:block th:unless="${post.id == null}">
+
+    <form th:action="@{'/posts/'+ ${post.id} +'/edit'}" method="post" th:object="${post}">
+
+        <h2>Edit Post Form</h2>
+
+        <br>
+
+        <label for="title">Title</label>
+        <input th:field="*{title}" type="text">
+
+        <br>
+
+        <label for="body">body</label>
+        <input th:field="*{body}" type="text">
+
+        <br>
+
+        <input type="submit" value="create post">
+
+    </form>
+
+</th:block>
+
+
+
+
 </body>
 </html>

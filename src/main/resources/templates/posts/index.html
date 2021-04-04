@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>All Posts</title>
-</head>
+<head th:replace="fragments/header :: main-head('All Posts')"></head>
 <body>
+<nav th:replace="fragments/navbar :: mainNav"></nav>
 <div class="container">
     <div th:each="post : ${posts}">
         <h1 th:text="${post.title}"></h1>

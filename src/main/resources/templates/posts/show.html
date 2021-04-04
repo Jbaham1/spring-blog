@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>SHOW</title>
-</head>
+<head th:replace="fragments/header :: main-head('Show a post')"></head>
 <body>
+<nav th:replace="fragments/navbar :: mainNav"></nav>
 <main class="container">
     <div class="post">
         <h1 th:text="${post.title}"></h1>

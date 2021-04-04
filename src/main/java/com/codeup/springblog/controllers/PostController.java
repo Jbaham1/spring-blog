@@ -1,7 +1,9 @@
 package com.codeup.springblog.controllers;
 
 import com.codeup.springblog.models.Post;
+import com.codeup.springblog.models.User;
 import com.codeup.springblog.repo.PostRepo;
+import com.codeup.springblog.repo.UserRepo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +16,12 @@ import java.util.List;
 public class PostController {
     //    List<Post> posts = new ArrayList<>();
     private final PostRepo postDao;
+    private final UserRepo userDao;
 
-    public PostController(PostRepo postDao) {
+    public PostController(PostRepo postDao, UserRepo userDao) {
         this.postDao = postDao;
+        this.userDao = userDao;
     }
-
     @GetMapping("/posts")
     public String allPosts(Model viewModel) {
         List<Post> postFromDB = postDao.findAll();
@@ -39,7 +42,8 @@ public class PostController {
     }
 
     @PostMapping("/posts/create")
-    public String CreatePost(@ModelAttribute Post postToSave) {
+    public String CreatePost(@ModelAttribute Post postToSave, @ModelAttribute User userToAdd) {
+        postToSave.setOwner(userToAdd);
         postDao.save(postToSave);
         return "redirect:/posts";
     }
@@ -51,9 +55,14 @@ public class PostController {
     }
 
     @PostMapping("/posts/{id}/edit")
-    public String editPost(@ModelAttribute Post postToUpdate, @PathVariable Long id) {
+    public String editPost(@ModelAttribute Post postToUpdate, @ModelAttribute User userToAdd, @PathVariable Long id) {
+
+        System.out.println();
 
         postToUpdate.setId(id);
+
+
+        postToUpdate.setOwner(userToAdd);
 
         postDao.save(postToUpdate);
 

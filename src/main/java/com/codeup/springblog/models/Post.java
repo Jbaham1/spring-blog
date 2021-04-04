@@ -12,8 +12,20 @@ public class Post {
     @Column(nullable = false, length = 225)
     private String title;
 
-    @Column(nullable = false, length = 500)
+    @Column(columnDefinition = "TEXT", nullable = false, length = 300)
     private String body;
+
+    @ManyToOne()
+    @JoinColumn(name = "user_id")
+    private User owner;
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
 
     public Post() {
     }

@@ -5,6 +5,7 @@ import com.codeup.springblog.models.User;
 import com.codeup.springblog.repo.PostRepo;
 import com.codeup.springblog.repo.UserRepo;
 import com.codeup.springblog.services.EmailService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,17 +41,22 @@ public class PostController {
     }
 
     @GetMapping("/posts/create")
-    public String createPost(Model viewModel) {
-        viewModel.addAttribute("post", new Post());
+    public String viewPostForm(Model vModel){
+        vModel.addAttribute("post",new Post());
         return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    public String CreatePost(@ModelAttribute Post post) {
-        User user = userDao.getOne(1L);
-        post.setOwner(user);
-        Post savedPost = postDao.save(post);
-        emailService.prepareAndSend(savedPost, "New Ad!", "A new Ad has been created in the app");
+    public String createPost(@ModelAttribute Post postToSave){
+
+        User userToAdd = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // set the user
+        postToSave.setOwner(userToAdd);
+
+        // Now lets save our post;
+        postDao.save(postToSave);
+
         return "redirect:/posts";
     }
 

@@ -5,6 +5,7 @@ import com.codeup.springblog.models.User;
 import com.codeup.springblog.repo.PostRepo;
 import com.codeup.springblog.repo.UserRepo;
 import com.codeup.springblog.services.EmailService;
+import com.codeup.springblog.services.UserDetailsLoader;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,22 +61,31 @@ public class PostController {
         return "redirect:/posts";
     }
 
-    @GetMapping("/posts/{id}/edit")
-    public String viewEditForm(Model viewModel, @PathVariable Long id) {
-        viewModel.addAttribute("post", postDao.getOne(id));
-        return "posts/create";
+    @GetMapping("/posts/{id}/update")
+    public String updatePostForm(@PathVariable Long id, Model model){
+
+        Post postFromDb = postDao.getOne(id);
+
+        model.addAttribute("oldPost",postFromDb);
+
+        return "posts/update";
     }
 
-    @PostMapping("/posts/{id}/edit")
-    public String editPost(@ModelAttribute Post postToUpdate, @ModelAttribute User userToAdd, @PathVariable Long id) {
+    @PostMapping("/posts/{id}/update")
+    @ResponseBody
+    public String updatePost(@PathVariable Long id,@RequestParam("post_title") String title, @RequestParam("post_body") String body){
 
-        postToUpdate.setId(id);
+        Post postToSave = new Post(id,title,body);
 
-        postToUpdate.setOwner(userToAdd);
+        postDao.save(postToSave);
+        return "You updated an post.";
+    }
 
-        postDao.save(postToUpdate);
+    @PostMapping("/posts/{id}/delete")
+    public String deletePost(@PathVariable Long id){
+        postDao.deleteById(id);
+        return "posts/index";
 
-        return "redirect:/posts";
     }
 }
 

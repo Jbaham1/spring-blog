@@ -7,8 +7,7 @@
 <form th:action="@{/posts/create}" th:method="post" th:object="${post}">
 
     <h2>Create Post Form</h2>
-
-    <br>
+<br>
 
     <label for="title">Title</label>
     <input th:field="*{title}" id="title" type="text">

@@ -8,13 +8,10 @@
 
 
 <main class="container">
+    <h1>Latest posts</h1>
     <div class="post" th:each="post : ${posts}">
-        <div>
-            <h1 th:text="${post.title}"></h1>
-            <p th:text="${post.body}"></p>
-            <input type="submit" value="Edit" >
-            <input type="submit" value="Delete">
-        </div>
+        <h1 th:text="${post.title}"></h1>
+        <p th:text="${post.body}"></p>
     </div>
 </main>
 
